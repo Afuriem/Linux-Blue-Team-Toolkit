@@ -1,11 +1,11 @@
-📁 deteccion_intrusiones.md
+# 📁 deteccion_intrusiones.md
 
 Objetivo del archivo:
 Ofrecer un conjunto de herramientas y comandos orientados a detectar posibles accesos no autorizados, actividad sospechosa y señales de intrusión en un sistema Linux.
 
 Te presento una introducción y después el contenido completo siguiendo la misma estructura que el archivo anterior (descripción, ejemplo, resultado y uso defensivo).
 
-✅ Introducción
+# ✅ Introducción
 # 🔍 deteccion_intrusiones.md
 
 Este documento agrupa comandos y herramientas útiles para detectar accesos no autorizados, cambios sospechosos o actividad anómala en sistemas Linux.
@@ -21,7 +21,7 @@ Aquí encontrarás comandos para:
 > ⚠️ Consejo: muchos de estos comandos se deben ejecutar como superusuario para obtener información completa. Úsalos con precaución y en entornos controlados si estás aprendiendo.
 
 
-🧰 Comandos para detección de intrusiones
+#🧰 Comandos para detección de intrusiones
 ## 🛠️ Comando: lastlog
 📝 Muestra el último login de cada usuario del sistema.
 💻 Ejemplo:
