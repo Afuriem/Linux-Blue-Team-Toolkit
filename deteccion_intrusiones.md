@@ -55,56 +55,71 @@ w
 ### 🚪 Autenticaciones SSH
 
 #### Logins exitosos vía SSH
+```bash
 grep "Accepted" /var/log/auth.log
-
+```
 #### Fallos de autenticación más repetidos
+```bash
 grep "Failed password" /var/log/auth.log | sort | uniq -c | sort -nr | head
-
+````
 #### Intentos con usuarios inválidos
+```bash
 grep "Invalid user" /var/log/auth.log
-
+```
 ---
 
 ### 🔧 Persistencia y manipulación del sistema
 
 #### Cron jobs del sistema
+```bash
 cat /etc/crontab
-
+```
 #### Cron jobs por usuario
+```bash
 for user in $(cut -f1 -d: /etc/passwd); do crontab -u $user -l 2>/dev/null; done
-
+```
 #### Binarios con permisos SUID (escalada)
+```bash
 find / -perm -4000 -type f 2>/dev/null
-
+```
 ---
 
 ### 🕸️ Actividad de red sospechosa
 
 #### Conexiones activas y puertos abiertos
+```bash
 ss -antup
-
+```
 #### Servicios escuchando
+```bash
 lsof -nPi | grep LISTEN
-
+```
 ---
 
 ### 🧠 Comprobaciones forenses rápidas
 
 #### Fechas de modificación de archivos críticos
+```bash
 stat /etc/passwd /etc/shadow /etc/ssh/sshd_config
-
+```
 #### Comparación con backups
+```bash
 diff /etc/passwd /var/backups/passwd.bak
-
+```
 #### Comandos ejecutados hoy (requiere auditd)
+```bash
 ausearch -m USER_CMD -ts today
-
+```
 ---
 
 ### 🧪 Herramientas específicas de detección
 
 #### Rootkit Hunter
+```bash
 sudo rkhunter --check
+````
 
 #### Chkrootkit
+```bash
 sudo chkrootkit
+```
