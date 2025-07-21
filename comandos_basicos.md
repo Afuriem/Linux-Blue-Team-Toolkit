@@ -1,8 +1,21 @@
+# comandos_basicos.md
+
+Este documento recopila comandos fundamentales de Linux útiles para cualquier analista defensivo. Son la base para interactuar con el sistema, revisar su estado general y entender lo que ocurre en tiempo real.
+
+Aunque puedan parecer simples, estos comandos son esenciales para:
+
+- Diagnosticar comportamientos anómalos rápidamente.
+- Realizar una primera inspección forense.
+- Automatizar tareas defensivas en scripts.
+- Familiarizarse con los entornos Linux utilizados en entornos empresariales y SOCs.
+
 Cada comando incluye:
 - 📝 Descripción funcional.
 - 💻 Ejemplo de uso.
 - 📄 Resultado esperado o captura simulada.
 - 🔎 Casos de uso defensivos.
+
+> 💡 Consejo: no subestimes el poder de lo básico. Dominar estos comandos te hará mucho más ágil a la hora de responder ante incidentes o detectar anomalías en sistemas Linux.
 
 
 # 🧠 Comandos Básicos – Navegación y Gestión de Archivos
