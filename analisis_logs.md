@@ -66,7 +66,9 @@ ELK / Graylog / Splunk: para sistemas con múltiples nodos o entornos productivo
 ### 🛠️ Comando: journalctl
 📝 Accede a todos los logs gestionados por systemd.
 💻 Ejemplo:
+```bash
 journalctl -xe
+```
 📄 Resultado:
 Jul 21 10:00:01 servidor sshd[1234]: Failed password for root from 10.0.0.5 port 55412
 🔎 Uso defensivo: Consultar errores, accesos fallidos, reinicios de servicios o eventos críticos recientes.
@@ -76,7 +78,9 @@ Jul 21 10:00:01 servidor sshd[1234]: Failed password for root from 10.0.0.5 port
 ### 🛠️ Comando: tail -f /var/log/syslog
 📝 Visualiza logs en tiempo real.
 💻 Ejemplo:
+```bash
 tail -f /var/log/auth.log
+```
 📄 Resultado:
 Líneas que se van añadiendo en vivo según ocurren los eventos.
 🔎 Uso defensivo: Monitorizar intentos de login, alertas del sistema o respuestas ante incidentes.
@@ -86,7 +90,9 @@ Líneas que se van añadiendo en vivo según ocurren los eventos.
 ### 🛠️ Comando: grep "término" archivo.log
 📝 Busca coincidencias en archivos de log.
 💻 Ejemplo:
+```bash
 grep "Failed password" /var/log/auth.log
+```
 📄 Resultado:
 Jul 21 10:01: sshd[2345]: Failed password for invalid user admin from 192.168.1.10
 🔎 Uso defensivo: Detectar intentos de acceso fallido o brute force.
@@ -96,7 +102,9 @@ Jul 21 10:01: sshd[2345]: Failed password for invalid user admin from 192.168.1.
 ### 🛠️ Comando: grep -iE "error|fail|denied" archivo.log
 📝 Busca múltiples patrones con sensibilidad a mayúsculas/minúsculas.
 💻 Ejemplo:
+```bash
 grep -iE "error|fail|denied" /var/log/syslog
+```
 📄 Resultado:
 Mensajes del sistema indicando fallos o denegaciones.
 🔎 Uso defensivo: Encontrar pistas sobre errores de servicios o acciones bloqueadas por el sistema.
@@ -106,7 +114,9 @@ Mensajes del sistema indicando fallos o denegaciones.
 ### 🛠️ Comando: zgrep "ssh" /var/log/auth.log.1.gz
 📝 Busca en logs comprimidos.
 💻 Ejemplo:
+```bash
 zgrep "Accepted" /var/log/auth.log.1.gz
+```
 📄 Resultado:
 Líneas de log antiguas donde se aceptaron conexiones SSH.
 🔎 Uso defensivo: Analizar eventos históricos que ya fueron archivados.
@@ -116,7 +126,9 @@ Líneas de log antiguas donde se aceptaron conexiones SSH.
 ### 🛠️ Comando: awk '{print $1,$2,$3}' archivo.log
 📝 Extrae campos específicos.
 💻 Ejemplo:
+```bash
 awk '{print $1,$2,$3}' /var/log/auth.log | head
+```
 📄 Resultado:
 Fecha y hora de los eventos logueados.
 🔎 Uso defensivo: Generar líneas de tiempo o correlacionar eventos rápidamente.
@@ -126,7 +138,9 @@ Fecha y hora de los eventos logueados.
 ### 🛠️ Comando: cut -d ' ' -f5- archivo.log
 📝 Elimina columnas para enfocar el mensaje principal.
 💻 Ejemplo:
+```bash
 cut -d ' ' -f5- /var/log/syslog | tail
+```
 📄 Resultado:
 Muestra solo el contenido útil de cada entrada.
 🔎 Uso defensivo: Limpiar ruido y centrarse en eventos concretos.
@@ -136,7 +150,9 @@ Muestra solo el contenido útil de cada entrada.
 ### 🛠️ Comando: sed -n '/Jul 21/,/Jul 22/p' archivo.log
 📝 Muestra logs entre dos fechas.
 💻 Ejemplo:
+```bash
 sed -n '/Jul 20/,/Jul 21/p' /var/log/auth.log
+```
 📄 Resultado:
 Eventos que ocurrieron entre esas fechas.
 🔎 Uso defensivo: Delimitar el análisis a la ventana temporal de un incidente.
@@ -146,7 +162,9 @@ Eventos que ocurrieron entre esas fechas.
 ### 🛠️ Comando: less +F archivo.log
 📝 Visualiza log con scroll en tiempo real (modo seguimiento).
 💻 Ejemplo:
+```bash
 less +F /var/log/syslog
+```
 📄 Resultado:
 Salida similar a `tail -f`, pero navegable.
 🔎 Uso defensivo: Revisar logs en vivo sin perder posibilidad de buscar o pausar.
@@ -156,7 +174,9 @@ Salida similar a `tail -f`, pero navegable.
 ### 🛠️ Comando: logwatch / logcheck (si están instalados)
 📝 Herramientas para generar resúmenes automáticos de logs.
 💻 Ejemplo:
+```bash
 sudo logwatch --detail High --service sshd --range today
+```
 📄 Resultado:
 Informe con eventos importantes del día relacionados con SSH.
 🔎 Uso defensivo: Automatizar el análisis diario de eventos relevantes de seguridad.
@@ -166,7 +186,9 @@ Informe con eventos importantes del día relacionados con SSH.
 ### 🛠️ Comando: aureport
 📝 Resumen de eventos del sistema auditado.
 💻 Ejemplo:
+```bash
 aureport --summary
+```
 📄 Resultado:
 Cantidad de eventos por tipo (ej. autenticación, comandos ejecutados, etc.)
 🔎 Uso defensivo: Obtener una visión rápida de las acciones realizadas en el sistema.
@@ -176,7 +198,9 @@ Cantidad de eventos por tipo (ej. autenticación, comandos ejecutados, etc.)
 ### 🛠️ Comando: diff archivo.log copia.log
 📝 Compara dos versiones de un log.
 💻 Ejemplo:
+```bash
 diff /var/log/auth.log /home/usuario/auth_bk.log
+```
 📄 Resultado:
 Muestra diferencias línea por línea.
 🔎 Uso defensivo: Detectar manipulación de logs o alteraciones posteriores a un incidente.
@@ -186,7 +210,9 @@ Muestra diferencias línea por línea.
 ### 🛠️ Comando: find /var/log -type f -size +10M
 📝 Identifica logs que han crecido demasiado.
 💻 Ejemplo:
+```bash
 find /var/log -type f -size +10M
+```
 📄 Resultado:
 /var/log/syslog.1
 🔎 Uso defensivo: Detección de posibles ataques DoS o generación masiva de logs como técnica evasiva.
