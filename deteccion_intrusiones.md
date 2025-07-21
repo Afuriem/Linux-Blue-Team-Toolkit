@@ -20,6 +20,19 @@ Más allá de los fallos de login o conexiones SSH, aquí aprenderás a detectar
 
 ---
 
+## 📌 Buenas prácticas al buscar intrusiones
+Compara eventos entre varios logs: auth.log, syslog, wtmp, cron, etc.
+
+Usa diff, stat y auditd para buscar alteraciones en archivos clave.
+
+Revisa IPs con herramientas como AbuseIPDB o VirusTotal si detectas conexiones externas.
+
+Si tienes dudas, apaga la máquina y clona el disco para análisis forense en frío.
+
+> 🧠 Consejo: una intrusión rara vez deja un solo rastro. Aprende a hilar pequeñas anomalías hasta formar un patrón claro. La intuición del analista se entrena con experiencia y con método.
+
+---
+
 ## 🛡️ Comandos y técnicas de detección
 
 ### 🧑‍💼 Revisión de inicios de sesión
@@ -39,76 +52,59 @@ w
 
 ---
 
-# 🚪 Autenticaciones SSH
+### 🚪 Autenticaciones SSH
 
-# Logins exitosos vía SSH
+#### Logins exitosos vía SSH
 grep "Accepted" /var/log/auth.log
 
-# Fallos de autenticación más repetidos
+#### Fallos de autenticación más repetidos
 grep "Failed password" /var/log/auth.log | sort | uniq -c | sort -nr | head
 
-# Intentos con usuarios inválidos
+#### Intentos con usuarios inválidos
 grep "Invalid user" /var/log/auth.log
 
 ---
 
-# 🔧 Persistencia y manipulación del sistema
+### 🔧 Persistencia y manipulación del sistema
 
-# Cron jobs del sistema
+#### Cron jobs del sistema
 cat /etc/crontab
 
-# Cron jobs por usuario
+#### Cron jobs por usuario
 for user in $(cut -f1 -d: /etc/passwd); do crontab -u $user -l 2>/dev/null; done
 
-# Binarios con permisos SUID (escalada)
+#### Binarios con permisos SUID (escalada)
 find / -perm -4000 -type f 2>/dev/null
 
 ---
 
-# 🕸️ Actividad de red sospechosa
+### 🕸️ Actividad de red sospechosa
 
-# Conexiones activas y puertos abiertos
+#### Conexiones activas y puertos abiertos
 ss -antup
 
-# Servicios escuchando
+#### Servicios escuchando
 lsof -nPi | grep LISTEN
 
 ---
 
-# 🧠 Comprobaciones forenses rápidas
+### 🧠 Comprobaciones forenses rápidas
 
-# Fechas de modificación de archivos críticos
+#### Fechas de modificación de archivos críticos
 stat /etc/passwd /etc/shadow /etc/ssh/sshd_config
 
-# Comparación con backups
+#### Comparación con backups
 diff /etc/passwd /var/backups/passwd.bak
 
-# Comandos ejecutados hoy (requiere auditd)
+#### Comandos ejecutados hoy (requiere auditd)
 ausearch -m USER_CMD -ts today
 
 ---
 
-# 🧪 Herramientas específicas de detección
+### 🧪 Herramientas específicas de detección
 
-# Rootkit Hunter
+#### Rootkit Hunter
 sudo rkhunter --check
 
-# Chkrootkit
+#### Chkrootkit
 sudo chkrootkit
-
----
-
-## 📌 Buenas prácticas
-
-# Correlaciona logs: auth.log, syslog, cron, etc.
-# Verifica conexiones con IP externas sospechosas:
-#   -> https://abuseipdb.com/
-#   -> https://www.virustotal.com/
-# Si sospechas de compromiso:
-#   - Apaga la máquina.
-#   - Clona el disco.
-#   - Analiza en entorno forense aislado.
-
-# 🧠 Consejo:
-# Una intrusión rara vez deja un solo rastro.
-# Aprende a hilar pequeñas anomalías hasta formar un patrón claro.
