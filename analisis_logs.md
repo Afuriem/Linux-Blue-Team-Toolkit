@@ -58,7 +58,7 @@ Logcheck: analiza logs en busca de anomalías conocidas.
 
 ELK / Graylog / Splunk: para sistemas con múltiples nodos o entornos productivos grandes.
 
-🛡️ Recuerda: los logs cuentan una historia. Saber leerla es una de las habilidades más valiosas de cualquier analista de ciberseguridad defensiva.
+> 🛡️ Recuerda: los logs cuentan una historia. Saber leerla es una de las habilidades más valiosas de cualquier analista de ciberseguridad defensiva.
 
 ---
 ## 🔧 Comandos útiles para buscar estos patrones
