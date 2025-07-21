@@ -8,21 +8,25 @@ Más allá de los fallos de login o conexiones SSH, aquí aprenderás a detectar
 
 ## 🧩 Indicadores comunes de intrusión en Linux
 
-# Indicador                         ¿Por qué es sospechoso?
-# ----------                        -------------------------
-# ❌ Fallos de autenticación        Intentos de fuerza bruta o reconocimiento previo
-# 🕵️ Accesos fuera de horario       Actividad que evita supervisión humana
-# 🧑‍💻 Nuevos usuarios creados       Creación de cuentas persistentes
-# 🐚 Bash sin razón aparente        Posible reverse shell
-# 🔄 Cron jobs extraños             Persistencia encubierta
-# 🎯 Puertos abiertos inusuales    Backdoors, túneles, malware
-# 🧬 Binarios con permisos SUID    Escalada de privilegios
+| Indicador | ¿Por qué es sospechoso? |
+|----------|--------------------------|
+| ❌ Fallos de autenticación reiterados | Intentos de fuerza bruta o reconocimiento previo |
+| 🕵️ Accesos remotos fuera de horario | Actividad que evita supervisión humana |
+| 🧑‍💻 Nuevos usuarios sin justificación | Creación de cuentas persistentes |
+| 🐚 Bash ejecutándose sin motivo aparente | Posible reverse shell |
+| 🔄 Cron jobs inesperados | Mecanismos de persistencia |
+| 🎯 Servicios escuchando en puertos inusuales | Backdoors, túneles, malware en escucha |
+| 🧬 Binarios modificados o con permisos SUID | Escalada de privilegios |
 
 ---
 
 ## 🛡️ Comandos y técnicas de detección
 
-# 🧑‍💼 Revisión de inicios de sesión
+### 🧑‍💼 Revisión de inicios de sesión
+
+#### ✅ Ver últimos accesos por usuario
+```bash
+lastlog
 
 # Ver últimos accesos por usuario
 lastlog
