@@ -261,8 +261,8 @@ ausearch -x /usr/bin/passwd
 getfacl archivo.txt
 ```
 📄 Resultado:
-# file: archivo.txt
-# owner: root
+file: archivo.txt
+owner: root
 user::rw-
 🔎 Uso defensivo: Verificar y aplicar controles de acceso detallados.
 
