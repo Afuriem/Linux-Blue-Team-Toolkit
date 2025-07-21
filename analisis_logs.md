@@ -40,7 +40,7 @@ Aquí tienes ejemplos de patrones **sospechosos o dignos de análisis**:
 
 ---
 
-# 🧠 Buenas prácticas para analizar logs
+## 🧠 Buenas prácticas para analizar logs
 No busques solo errores. Busca también comportamientos anómalos que no generen error (como un bash a medianoche).
 
 Correlaciona eventos. Si ves un acceso SSH a las 02:00 y luego se reinicia el cron, puede ser parte de una intrusión.
@@ -49,7 +49,7 @@ Filtra por IP o usuario. Te ayudará a seguir el rastro de un atacante si repite
 
 No ignores los logs binarios. Usa lastb y last para acceder a wtmp y btmp.
 
-# 📌 Herramientas adicionales recomendadas
+## 📌 Herramientas adicionales recomendadas
 Logwatch: genera informes diarios de logs.
 
 GoAccess: análisis en tiempo real de logs web (útil si hay Apache/Nginx).
