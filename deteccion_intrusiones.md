@@ -21,7 +21,7 @@ Aquí encontrarás comandos para:
 > ⚠️ Consejo: muchos de estos comandos se deben ejecutar como superusuario para obtener información completa. Úsalos con precaución y en entornos controlados si estás aprendiendo.
 
 
-#🧰 Comandos para detección de intrusiones
+# 🧰 Comandos para detección de intrusiones
 ## 🛠️ Comando: lastlog
 📝 Muestra el último login de cada usuario del sistema.
 💻 Ejemplo:
