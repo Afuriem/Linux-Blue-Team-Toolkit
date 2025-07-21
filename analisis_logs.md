@@ -1,24 +1,69 @@
-# 📁 analisis_logs.md
-
-Objetivo del archivo:
-Proporcionar comandos y técnicas para consultar, filtrar y entender los logs del sistema Linux, con enfoque en detección de eventos anómalos o sospechosos.
-
-# ✅ Introducción
 # 🧾 analisis_logs.md
 
-El análisis de logs es una de las herramientas más valiosas del equipo Blue Team. Nos permite reconstruir eventos, identificar accesos sospechosos, evaluar comportamientos inusuales y detectar intentos de intrusión que no hayan sido bloqueados directamente.
+Los registros del sistema (logs) son una fuente crítica de información en ciberseguridad defensiva. A través de ellos podemos reconstruir eventos, detectar accesos no autorizados, monitorizar servicios críticos y entender qué ocurrió antes, durante y después de un incidente.
 
-Este documento recopila comandos y estrategias para revisar logs del sistema de forma efectiva, filtrando lo importante y detectando patrones relevantes para ciberseguridad defensiva.
+Este documento no solo ofrece comandos, sino también **criterios para interpretar eventos sospechosos** en los logs más relevantes del sistema.
 
-Se incluyen:
-- Logs comunes en sistemas Linux.
-- Comandos para leer, buscar y extraer información útil.
-- Casos de uso típicos en análisis post-incidente.
+---
 
-> 🛡️ Consejo: Si dominas los logs, dominas el sistema. Aprende a leer entre líneas para encontrar señales que otros pasarían por alto.
+## 🗂️ Principales logs que debes conocer
 
-# 🧰 Comandos para análisis de logs
-## 🛠️ Comando: journalctl
+| Archivo de log | Contenido | Interés defensivo |
+|----------------|-----------|-------------------|
+| `/var/log/auth.log` o `/var/log/secure` | Autenticaciones, sudo, SSH | Detección de accesos fallidos, escaladas, sesiones SSH |
+| `/var/log/syslog` o `/var/log/messages` | Mensajes generales del sistema | Eventos de kernel, errores de servicios |
+| `/var/log/faillog` | Fallos de login por usuario | Cuentas bloqueadas o atacadas |
+| `/var/log/wtmp` y `btmp` | Logins exitosos y fallidos binarios | Se accede con `last` y `lastb` |
+| `/var/log/audit/audit.log` | Auditoría avanzada (si auditd está activo) | Eventos críticos del sistema: comandos, cambios de permisos, etc. |
+
+---
+
+## 🔍 ¿Qué debes buscar en los logs?
+
+Aquí tienes ejemplos de patrones **sospechosos o dignos de análisis**:
+
+### 🔐 Autenticación
+- Accesos desde IPs inusuales o países extranjeros.
+- Muchos fallos de login seguidos de un login exitoso.
+- Intentos con usuarios inválidos (`invalid user`).
+- Uso inusual de `sudo`.
+
+### 🧑‍💻 Comportamiento del sistema
+- Reinicios de servicios clave sin justificación (`sshd`, `cron`, `rsyslog`...).
+- Logs que desaparecen, rotan de forma anómala o han sido modificados.
+- Alertas de `kernel` sobre procesos que se matan solos o cargan módulos sospechosos.
+
+### 📦 Actividad de red
+- Servicios escuchando en puertos que no deberían estar abiertos.
+- Conexiones salientes desde procesos inesperados (por ejemplo, `bash` o `curl`).
+- Tráfico constante hacia una misma IP (posible C2).
+
+---
+
+# 🧠 Buenas prácticas para analizar logs
+No busques solo errores. Busca también comportamientos anómalos que no generen error (como un bash a medianoche).
+
+Correlaciona eventos. Si ves un acceso SSH a las 02:00 y luego se reinicia el cron, puede ser parte de una intrusión.
+
+Filtra por IP o usuario. Te ayudará a seguir el rastro de un atacante si repite patrón.
+
+No ignores los logs binarios. Usa lastb y last para acceder a wtmp y btmp.
+
+# 📌 Herramientas adicionales recomendadas
+Logwatch: genera informes diarios de logs.
+
+GoAccess: análisis en tiempo real de logs web (útil si hay Apache/Nginx).
+
+Logcheck: analiza logs en busca de anomalías conocidas.
+
+ELK / Graylog / Splunk: para sistemas con múltiples nodos o entornos productivos grandes.
+
+🛡️ Recuerda: los logs cuentan una historia. Saber leerla es una de las habilidades más valiosas de cualquier analista de ciberseguridad defensiva.
+
+---
+## 🔧 Comandos útiles para buscar estos patrones
+
+### 🛠️ Comando: journalctl
 📝 Accede a todos los logs gestionados por systemd.
 💻 Ejemplo:
 journalctl -xe
@@ -28,7 +73,7 @@ Jul 21 10:00:01 servidor sshd[1234]: Failed password for root from 10.0.0.5 port
 
 ---
 
-## 🛠️ Comando: tail -f /var/log/syslog
+### 🛠️ Comando: tail -f /var/log/syslog
 📝 Visualiza logs en tiempo real.
 💻 Ejemplo:
 tail -f /var/log/auth.log
@@ -38,7 +83,7 @@ Líneas que se van añadiendo en vivo según ocurren los eventos.
 
 ---
 
-## 🛠️ Comando: grep "término" archivo.log
+### 🛠️ Comando: grep "término" archivo.log
 📝 Busca coincidencias en archivos de log.
 💻 Ejemplo:
 grep "Failed password" /var/log/auth.log
@@ -48,7 +93,7 @@ Jul 21 10:01: sshd[2345]: Failed password for invalid user admin from 192.168.1.
 
 ---
 
-## 🛠️ Comando: grep -iE "error|fail|denied" archivo.log
+### 🛠️ Comando: grep -iE "error|fail|denied" archivo.log
 📝 Busca múltiples patrones con sensibilidad a mayúsculas/minúsculas.
 💻 Ejemplo:
 grep -iE "error|fail|denied" /var/log/syslog
@@ -58,7 +103,7 @@ Mensajes del sistema indicando fallos o denegaciones.
 
 ---
 
-## 🛠️ Comando: zgrep "ssh" /var/log/auth.log.1.gz
+### 🛠️ Comando: zgrep "ssh" /var/log/auth.log.1.gz
 📝 Busca en logs comprimidos.
 💻 Ejemplo:
 zgrep "Accepted" /var/log/auth.log.1.gz
@@ -68,7 +113,7 @@ Líneas de log antiguas donde se aceptaron conexiones SSH.
 
 ---
 
-## 🛠️ Comando: awk '{print $1,$2,$3}' archivo.log
+### 🛠️ Comando: awk '{print $1,$2,$3}' archivo.log
 📝 Extrae campos específicos.
 💻 Ejemplo:
 awk '{print $1,$2,$3}' /var/log/auth.log | head
@@ -78,7 +123,7 @@ Fecha y hora de los eventos logueados.
 
 ---
 
-## 🛠️ Comando: cut -d ' ' -f5- archivo.log
+### 🛠️ Comando: cut -d ' ' -f5- archivo.log
 📝 Elimina columnas para enfocar el mensaje principal.
 💻 Ejemplo:
 cut -d ' ' -f5- /var/log/syslog | tail
@@ -88,7 +133,7 @@ Muestra solo el contenido útil de cada entrada.
 
 ---
 
-## 🛠️ Comando: sed -n '/Jul 21/,/Jul 22/p' archivo.log
+### 🛠️ Comando: sed -n '/Jul 21/,/Jul 22/p' archivo.log
 📝 Muestra logs entre dos fechas.
 💻 Ejemplo:
 sed -n '/Jul 20/,/Jul 21/p' /var/log/auth.log
@@ -98,7 +143,7 @@ Eventos que ocurrieron entre esas fechas.
 
 ---
 
-## 🛠️ Comando: less +F archivo.log
+### 🛠️ Comando: less +F archivo.log
 📝 Visualiza log con scroll en tiempo real (modo seguimiento).
 💻 Ejemplo:
 less +F /var/log/syslog
@@ -108,7 +153,7 @@ Salida similar a `tail -f`, pero navegable.
 
 ---
 
-## 🛠️ Comando: logwatch / logcheck (si están instalados)
+### 🛠️ Comando: logwatch / logcheck (si están instalados)
 📝 Herramientas para generar resúmenes automáticos de logs.
 💻 Ejemplo:
 sudo logwatch --detail High --service sshd --range today
@@ -118,7 +163,7 @@ Informe con eventos importantes del día relacionados con SSH.
 
 ---
 
-## 🛠️ Comando: aureport
+### 🛠️ Comando: aureport
 📝 Resumen de eventos del sistema auditado.
 💻 Ejemplo:
 aureport --summary
@@ -128,7 +173,7 @@ Cantidad de eventos por tipo (ej. autenticación, comandos ejecutados, etc.)
 
 ---
 
-## 🛠️ Comando: diff archivo.log copia.log
+### 🛠️ Comando: diff archivo.log copia.log
 📝 Compara dos versiones de un log.
 💻 Ejemplo:
 diff /var/log/auth.log /home/usuario/auth_bk.log
@@ -138,7 +183,7 @@ Muestra diferencias línea por línea.
 
 ---
 
-## 🛠️ Comando: find /var/log -type f -size +10M
+### 🛠️ Comando: find /var/log -type f -size +10M
 📝 Identifica logs que han crecido demasiado.
 💻 Ejemplo:
 find /var/log -type f -size +10M
