@@ -18,9 +18,9 @@ Cada comando incluye:
 > 💡 Consejo: no subestimes el poder de lo básico. Dominar estos comandos te hará mucho más ágil a la hora de responder ante incidentes o detectar anomalías en sistemas Linux.
 
 
-# 🧠 Comandos Básicos – Navegación y Gestión de Archivos
+## 🧠 Comandos Básicos – Navegación y Gestión de Archivos
 
-## 🛠️ Comando: pwd
+### 🛠️ Comando: pwd
 📝 Muestra el directorio actual.
 💻 Ejemplo:
 pwd
@@ -30,7 +30,7 @@ pwd
 
 ---
 
-## 🛠️ Comando: ls -l
+### 🛠️ Comando: ls -l
 📝 Lista archivos con permisos, propietario y tamaño.
 💻 Ejemplo:
 ls -l
@@ -40,7 +40,7 @@ ls -l
 
 ---
 
-## 🛠️ Comando: cd
+### 🛠️ Comando: cd
 📝 Cambia de directorio.
 💻 Ejemplo:
 cd /etc
@@ -50,7 +50,7 @@ cd /etc
 
 ---
 
-## 🛠️ Comando: cat, less, more
+### 🛠️ Comando: cat, less, more
 📝 Visualiza contenido de archivos.
 💻 Ejemplo:
 less /etc/passwd
@@ -60,7 +60,7 @@ less /etc/passwd
 
 ---
 
-## 🛠️ Comando: cp, mv, rm
+### 🛠️ Comando: cp, mv, rm
 📝 Copiar, mover y eliminar archivos.
 💻 Ejemplo:
 cp archivo.txt /tmp/
@@ -70,7 +70,7 @@ cp archivo.txt /tmp/
 
 ---
 
-## 🛠️ Comando: mkdir, rmdir
+### 🛠️ Comando: mkdir, rmdir
 📝 Crear y eliminar directorios.
 💻 Ejemplo:
 mkdir nueva_carpeta
@@ -80,7 +80,7 @@ mkdir nueva_carpeta
 
 ---
 
-## 🛠️ Comando: find /ruta -name archivo
+### 🛠️ Comando: find /ruta -name archivo
 📝 Busca archivos por nombre.
 💻 Ejemplo:
 find /etc -name "shadow"
@@ -90,7 +90,7 @@ find /etc -name "shadow"
 
 ---
 
-## 🛠️ Comando: file
+### 🛠️ Comando: file
 📝 Muestra el tipo de un archivo.
 💻 Ejemplo:
 file archivo.bin
@@ -102,7 +102,7 @@ archivo.bin: ELF 64-bit LSB executable
 
 # 🔍 Monitoreo del sistema y análisis de procesos
 
-## 🛠️ Comando: top, htop
+### 🛠️ Comando: top, htop
 📝 Monitorea procesos activos en tiempo real.
 💻 Ejemplo:
 top
@@ -112,7 +112,7 @@ top
 
 ---
 
-## 🛠️ Comando: ps aux
+### 🛠️ Comando: ps aux
 📝 Lista todos los procesos en ejecución.
 💻 Ejemplo:
 ps aux
@@ -122,7 +122,7 @@ usuario   1234  0.0  0.1 123456 1234 ? Ss  10:00  0:00 /usr/sbin/sshd
 
 ---
 
-## 🛠️ Comando: netstat -tuln o ss -tuln
+### 🛠️ Comando: netstat -tuln o ss -tuln
 📝 Muestra puertos y conexiones activas.
 💻 Ejemplo:
 ss -tuln
@@ -132,7 +132,7 @@ LISTEN 0 128 0.0.0.0:22 ...
 
 ---
 
-## 🛠️ Comando: lsof -i
+### 🛠️ Comando: lsof -i
 📝 Muestra archivos abiertos y sockets de red.
 💻 Ejemplo:
 lsof -i
@@ -142,7 +142,7 @@ sshd 1234 root 3u IPv4 0x... TCP *:22 (LISTEN)
 
 ---
 
-## 🛠️ Comando: who, w, last
+### 🛠️ Comando: who, w, last
 📝 Muestra usuarios conectados y logins anteriores.
 💻 Ejemplo:
 last
@@ -152,7 +152,7 @@ usuario pts/0 192.168.1.2 Mon Jul 21 09:00 still logged in
 
 ---
 
-## 🛠️ Comando: uptime, free -h, df -h
+### 🛠️ Comando: uptime, free -h, df -h
 📝 Estado del sistema: tiempo encendido, RAM, disco.
 💻 Ejemplo:
 free -h
@@ -163,9 +163,9 @@ Mem:           7.8G        3.2G        4.6G
 
 ---
 
-# 🔐 Auditoría, permisos y seguridad
+## 🔐 Auditoría, permisos y seguridad
 
-## 🛠️ Comando: chmod, chown
+### 🛠️ Comando: chmod, chown
 📝 Cambia permisos y propiedad de archivos.
 💻 Ejemplo:
 chmod 600 archivo.txt
@@ -176,7 +176,7 @@ chown root:root archivo.txt
 
 ---
 
-## 🛠️ Comando: sudo
+### 🛠️ Comando: sudo
 📝 Ejecuta comandos con privilegios elevados.
 💻 Ejemplo:
 sudo nano /etc/ssh/sshd_config
@@ -186,7 +186,7 @@ sudo nano /etc/ssh/sshd_config
 
 ---
 
-## 🛠️ Comando: passwd
+### 🛠️ Comando: passwd
 📝 Cambia la contraseña de un usuario.
 💻 Ejemplo:
 sudo passwd usuario
@@ -196,7 +196,7 @@ sudo passwd usuario
 
 ---
 
-## 🛠️ Comando: history
+### 🛠️ Comando: history
 📝 Muestra historial de comandos ejecutados.
 💻 Ejemplo:
 history | grep netcat
@@ -206,7 +206,7 @@ history | grep netcat
 
 ---
 
-## 🛠️ Comando: auditctl, ausearch
+### 🛠️ Comando: auditctl, ausearch
 📝 Configura y consulta auditoría del sistema.
 💻 Ejemplo:
 ausearch -x /usr/bin/passwd
@@ -216,7 +216,7 @@ ausearch -x /usr/bin/passwd
 
 ---
 
-## 🛠️ Comando: getfacl, setfacl
+### 🛠️ Comando: getfacl, setfacl
 📝 Gestiona permisos extendidos.
 💻 Ejemplo:
 getfacl archivo.txt
@@ -228,9 +228,9 @@ user::rw-
 
 ---
 
-# 📦 Red y tráfico sospechoso
+## 📦 Red y tráfico sospechoso
 
-## 🛠️ Comando: tcpdump
+### 🛠️ Comando: tcpdump
 📝 Captura paquetes de red.
 💻 Ejemplo:
 sudo tcpdump -i eth0 port 80
@@ -240,7 +240,7 @@ sudo tcpdump -i eth0 port 80
 
 ---
 
-## 🛠️ Comando: ifconfig o ip a
+### 🛠️ Comando: ifconfig o ip a
 📝 Muestra interfaces de red y direcciones IP.
 💻 Ejemplo:
 ip a
@@ -260,7 +260,7 @@ ping 8.8.8.8
 
 ---
 
-## 🛠️ Comando: curl, wget
+### 🛠️ Comando: curl, wget
 📝 Descarga archivos o ejecuta peticiones HTTP.
 💻 Ejemplo:
 curl -I http://malicioso.com
@@ -270,9 +270,9 @@ HTTP/1.1 200 OK
 
 ---
 
-# 🧾 Registros (Logs)
+## 🧾 Registros (Logs)
 
-## 🛠️ Comando: journalctl
+### 🛠️ Comando: journalctl
 📝 Muestra logs gestionados por systemd.
 💻 Ejemplo:
 journalctl -xe
@@ -282,7 +282,7 @@ journalctl -xe
 
 ---
 
-## 🛠️ Comando: tail -f /var/log/syslog
+### 🛠️ Comando: tail -f /var/log/syslog
 📝 Muestra logs en tiempo real.
 💻 Ejemplo:
 tail -f /var/log/auth.log
@@ -292,7 +292,7 @@ línea a línea con autenticaciones o intentos fallidos.
 
 ---
 
-## 🛠️ Comando: grep, awk, cut, sed
+### 🛠️ Comando: grep, awk, cut, sed
 📝 Filtrado y análisis de texto en logs.
 💻 Ejemplo:
 grep "Failed password" /var/log/auth.log
@@ -302,7 +302,7 @@ registro de intentos fallidos de acceso SSH.
 
 ---
 
-## 🛠️ Comando: zcat, zgrep
+### 🛠️ Comando: zcat, zgrep
 📝 Lee archivos de logs comprimidos.
 💻 Ejemplo:
 zgrep "sshd" /var/log/auth.log.1.gz
@@ -312,9 +312,9 @@ líneas con eventos relacionados a SSH en logs archivados.
 
 ---
 
-# 🐚 Scripting y automatización
+## 🐚 Scripting y automatización
 
-## 🛠️ Comando: bash script.sh
+### 🛠️ Comando: bash script.sh
 📝 Ejecuta un script de Bash.
 💻 Ejemplo:
 bash mantenimiento.sh
@@ -324,7 +324,7 @@ bash mantenimiento.sh
 
 ---
 
-## 🛠️ Comando: crontab -l, crontab -e
+### 🛠️ Comando: crontab -l, crontab -e
 📝 Lista o edita tareas programadas.
 💻 Ejemplo:
 crontab -l
@@ -334,7 +334,7 @@ crontab -l
 
 ---
 
-## 🛠️ Comando: echo, date, sleep
+### 🛠️ Comando: echo, date, sleep
 📝 Utilidades para scripting y pruebas.
 💻 Ejemplo:
 sleep 5 && echo "Listo"
@@ -344,9 +344,9 @@ sleep 5 && echo "Listo"
 
 ---
 
-# 🧪 Forense y análisis rápido
+## 🧪 Forense y análisis rápido
 
-## 🛠️ Comando: stat archivo
+### 🛠️ Comando: stat archivo
 📝 Muestra metadatos de un archivo.
 💻 Ejemplo:
 stat /etc/passwd
@@ -356,7 +356,7 @@ Access, Modify, Change: fechas completas
 
 ---
 
-## 🛠️ Comando: sha256sum, md5sum
+### 🛠️ Comando: sha256sum, md5sum
 📝 Calcula hash de archivos.
 💻 Ejemplo:
 sha256sum archivo.bin
@@ -366,7 +366,7 @@ d2c2e3c...  archivo.bin
 
 ---
 
-## 🛠️ Comando: strings archivo
+### 🛠️ Comando: strings archivo
 📝 Extrae texto legible de binarios.
 💻 Ejemplo:
 strings malware.bin | less
@@ -376,7 +376,7 @@ strings malware.bin | less
 
 ---
 
-## 🛠️ Comando: file, hexdump
+### 🛠️ Comando: file, hexdump
 📝 Inspección avanzada de archivos.
 💻 Ejemplo:
 hexdump -C archivo.txt
