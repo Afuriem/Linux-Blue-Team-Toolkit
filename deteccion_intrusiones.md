@@ -25,16 +25,16 @@ Más allá de los fallos de login o conexiones SSH, aquí aprenderás a detectar
 ### 🧑‍💼 Revisión de inicios de sesión
 
 #### ✅ Ver últimos accesos por usuario
-```bash
+
 lastlog
 
-# Ver últimos accesos por usuario
+#### Ver últimos accesos por usuario
 lastlog
 
-# Accesos recientes con fecha y duración
+#### Accesos recientes con fecha y duración
 last -F | head -n 10
 
-# Sesiones activas actualmente
+#### Sesiones activas actualmente
 w
 
 ---
