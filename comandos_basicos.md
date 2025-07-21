@@ -100,7 +100,7 @@ archivo.bin: ELF 64-bit LSB executable
 
 ---
 
-# 🔍 Monitoreo del sistema y análisis de procesos
+## 🔍 Monitoreo del sistema y análisis de procesos
 
 ### 🛠️ Comando: top, htop
 📝 Monitorea procesos activos en tiempo real.
