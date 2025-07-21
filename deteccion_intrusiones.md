@@ -1,163 +1,110 @@
-# 📁 deteccion_intrusiones.md
-
-Objetivo del archivo:
-Ofrecer un conjunto de herramientas y comandos orientados a detectar posibles accesos no autorizados, actividad sospechosa y señales de intrusión en un sistema Linux.
-
-Te presento una introducción y después el contenido completo siguiendo la misma estructura que el archivo anterior (descripción, ejemplo, resultado y uso defensivo).
-
-# ✅ Introducción
 # 🔍 deteccion_intrusiones.md
 
-Este documento agrupa comandos y herramientas útiles para detectar accesos no autorizados, cambios sospechosos o actividad anómala en sistemas Linux.
+Detectar una intrusión a tiempo puede marcar la diferencia entre una anécdota y una brecha grave. Este documento reúne técnicas y comandos para identificar posibles accesos no autorizados o actividad anómala en sistemas Linux.
 
-Identificar indicios de intrusión en sus primeras fases puede marcar la diferencia entre una respuesta eficaz y una brecha grave.
+Más allá de los fallos de login o conexiones SSH, aquí aprenderás a detectar señales menos evidentes de compromiso, como tareas ocultas, persistencia mediante cron, escaladas de privilegios o binarios sospechosos.
 
-Aquí encontrarás comandos para:
-- Analizar historial de accesos y actividad reciente.
-- Inspeccionar procesos y conexiones inusuales.
-- Detectar modificaciones en archivos críticos.
-- Revisar logs relevantes para la seguridad.
+---
 
-> ⚠️ Consejo: muchos de estos comandos se deben ejecutar como superusuario para obtener información completa. Úsalos con precaución y en entornos controlados si estás aprendiendo.
+## 🧩 Indicadores comunes de intrusión en Linux
 
+# Indicador                         ¿Por qué es sospechoso?
+# ----------                        -------------------------
+# ❌ Fallos de autenticación        Intentos de fuerza bruta o reconocimiento previo
+# 🕵️ Accesos fuera de horario       Actividad que evita supervisión humana
+# 🧑‍💻 Nuevos usuarios creados       Creación de cuentas persistentes
+# 🐚 Bash sin razón aparente        Posible reverse shell
+# 🔄 Cron jobs extraños             Persistencia encubierta
+# 🎯 Puertos abiertos inusuales    Backdoors, túneles, malware
+# 🧬 Binarios con permisos SUID    Escalada de privilegios
 
-# 🧰 Comandos para detección de intrusiones
-## 🛠️ Comando: lastlog
-📝 Muestra el último login de cada usuario del sistema.
-💻 Ejemplo:
+---
+
+## 🛡️ Comandos y técnicas de detección
+
+# 🧑‍💼 Revisión de inicios de sesión
+
+# Ver últimos accesos por usuario
 lastlog
-📄 Resultado:
-usuario1 pts/0 192.168.1.2 Mon Jul 21 09:00:00 +0000 2025
-🔎 Uso defensivo: Detectar cuentas sin uso o logins desde ubicaciones inesperadas.
+
+# Accesos recientes con fecha y duración
+last -F | head -n 10
+
+# Sesiones activas actualmente
+w
 
 ---
 
-## 🛠️ Comando: last
-📝 Muestra un historial de inicios de sesión recientes.
-💻 Ejemplo:
-last -n 10
-📄 Resultado:
-usuario1 pts/0 192.168.1.2 Mon Jul 21 09:00 still logged in
-🔎 Uso defensivo: Identificar accesos remotos inusuales o en horarios atípicos.
+# 🚪 Autenticaciones SSH
+
+# Logins exitosos vía SSH
+grep "Accepted" /var/log/auth.log
+
+# Fallos de autenticación más repetidos
+grep "Failed password" /var/log/auth.log | sort | uniq -c | sort -nr | head
+
+# Intentos con usuarios inválidos
+grep "Invalid user" /var/log/auth.log
 
 ---
 
-## 🛠️ Comando: who / w
-📝 Muestra usuarios actualmente conectados.
-💻 Ejemplo:
-who
-📄 Resultado:
-usuario1 pts/0 192.168.1.2 09:00
-🔎 Uso defensivo: Confirmar conexiones activas, especialmente desde IPs sospechosas.
+# 🔧 Persistencia y manipulación del sistema
 
----
-
-## 🛠️ Comando: grep "Accepted" /var/log/auth.log
-📝 Filtra logins exitosos en el sistema.
-💻 Ejemplo:
-grep "Accepted" /var/log/auth.log | tail -n 5
-📄 Resultado:
-Jul 21 09:00:01 servidor sshd[1234]: Accepted password for usuario1 from 192.168.1.2
-🔎 Uso defensivo: Ver accesos remotos legítimos o compromisos exitosos vía SSH.
-
----
-
-## 🛠️ Comando: grep "Failed" /var/log/auth.log
-📝 Filtra intentos fallidos de acceso.
-💻 Ejemplo:
-grep "Failed" /var/log/auth.log | tail -n 5
-📄 Resultado:
-Jul 21 09:00:01 servidor sshd[1234]: Failed password for invalid user root from 10.0.0.5
-🔎 Uso defensivo: Detectar ataques de fuerza bruta o escaneos de credenciales.
-
----
-
-## 🛠️ Comando: find / -perm -4000 -type f 2>/dev/null
-📝 Busca archivos con permisos SUID.
-💻 Ejemplo:
-find / -perm -4000 -type f 2>/dev/null
-📄 Resultado:
-/usr/bin/passwd
-/usr/bin/sudo
-🔎 Uso defensivo: Revisar binarios privilegiados que pueden ser explotados para escalada de privilegios.
-
----
-
-## 🛠️ Comando: netstat -anp / ss -anp
-📝 Muestra conexiones activas con proceso asociado.
-💻 Ejemplo:
-ss -anp | grep ESTAB
-📄 Resultado:
-ESTAB 0 0 192.168.1.2:ssh 10.0.0.5:55412 users:(("sshd",pid=1234,fd=3))
-🔎 Uso defensivo: Identificar conexiones sospechosas o procesos escuchando en puertos inusuales.
-
----
-
-## 🛠️ Comando: lsof -nPi | grep LISTEN
-📝 Lista servicios que están escuchando conexiones entrantes.
-💻 Ejemplo:
-lsof -nPi | grep LISTEN
-📄 Resultado:
-sshd 1234 root 3u IPv4 0x... TCP *:22 (LISTEN)
-🔎 Uso defensivo: Ver qué servicios están accesibles desde red, especialmente si son inesperados.
-
----
-
-## 🛠️ Comando: crontab -l / cat /etc/crontab
-📝 Revisa tareas programadas por el usuario o el sistema.
-💻 Ejemplo:
+# Cron jobs del sistema
 cat /etc/crontab
-📄 Resultado:
-@reboot root /bin/bash /tmp/script_sospechoso.sh
-🔎 Uso defensivo: Detectar persistencia maliciosa mediante cron jobs.
+
+# Cron jobs por usuario
+for user in $(cut -f1 -d: /etc/passwd); do crontab -u $user -l 2>/dev/null; done
+
+# Binarios con permisos SUID (escalada)
+find / -perm -4000 -type f 2>/dev/null
 
 ---
 
-## 🛠️ Comando: auditctl / ausearch
-📝 Monitoriza eventos sensibles del sistema.
-💻 Ejemplo:
-ausearch -m USER_CMD -ts today
-📄 Resultado:
-registro de comandos ejecutados por usuarios con detalles de hora y terminal.
-🔎 Uso defensivo: Auditar actividad sospechosa o uso indebido de privilegios.
+# 🕸️ Actividad de red sospechosa
+
+# Conexiones activas y puertos abiertos
+ss -antup
+
+# Servicios escuchando
+lsof -nPi | grep LISTEN
 
 ---
 
-## 🛠️ Comando: stat archivo
-📝 Muestra fechas de creación, modificación y acceso.
-💻 Ejemplo:
-stat /etc/passwd
-📄 Resultado:
-Access: 2025-07-21
-Modify: 2025-07-20
-🔎 Uso defensivo: Detectar archivos críticos modificados fuera de horarios habituales.
+# 🧠 Comprobaciones forenses rápidas
 
----
+# Fechas de modificación de archivos críticos
+stat /etc/passwd /etc/shadow /etc/ssh/sshd_config
 
-## 🛠️ Comando: chkrootkit / rkhunter
-📝 Herramientas para detectar rootkits conocidos.
-💻 Ejemplo:
-sudo chkrootkit
-📄 Resultado:
-Searching for Suckit rootkit... not found
-🔎 Uso defensivo: Identificar herramientas de intrusión persistente.
-
----
-
-## 🛠️ Comando: strings binario | grep /bin/sh
-📝 Extrae cadenas de texto de binarios sospechosos.
-💻 Ejemplo:
-strings malware.bin | grep /bin/sh
-📄 Resultado:
-/bin/sh -c rm -rf /
-🔎 Uso defensivo: Detectar payloads maliciosos dentro de binarios descargados.
-
----
-
-## 🛠️ Comando: diff /etc/passwd /var/backups/passwd.bak
-📝 Compara archivos críticos con copias de seguridad.
-💻 Ejemplo:
+# Comparación con backups
 diff /etc/passwd /var/backups/passwd.bak
-📄 Resultado:
-< usuariox:x:1002:1002::/home/usuariox:/bin/bash
-🔎 Uso defensivo: Identificar cuentas nuevas creadas por intrusos.
+
+# Comandos ejecutados hoy (requiere auditd)
+ausearch -m USER_CMD -ts today
+
+---
+
+# 🧪 Herramientas específicas de detección
+
+# Rootkit Hunter
+sudo rkhunter --check
+
+# Chkrootkit
+sudo chkrootkit
+
+---
+
+## 📌 Buenas prácticas
+
+# Correlaciona logs: auth.log, syslog, cron, etc.
+# Verifica conexiones con IP externas sospechosas:
+#   -> https://abuseipdb.com/
+#   -> https://www.virustotal.com/
+# Si sospechas de compromiso:
+#   - Apaga la máquina.
+#   - Clona el disco.
+#   - Analiza en entorno forense aislado.
+
+# 🧠 Consejo:
+# Una intrusión rara vez deja un solo rastro.
+# Aprende a hilar pequeñas anomalías hasta formar un patrón claro.
