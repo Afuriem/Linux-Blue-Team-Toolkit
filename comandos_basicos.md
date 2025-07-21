@@ -1,4 +1,4 @@
-# comandos_basicos.md
+# 📁 comandos_basicos.md
 
 Este documento recopila comandos fundamentales de Linux útiles para cualquier analista defensivo. Son la base para interactuar con el sistema, revisar su estado general y entender lo que ocurre en tiempo real.
 
