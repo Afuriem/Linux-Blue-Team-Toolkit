@@ -38,18 +38,18 @@ Si tienes dudas, apaga la máquina y clona el disco para análisis forense en fr
 ### 🧑‍💼 Revisión de inicios de sesión
 
 #### ✅ Ver últimos accesos por usuario
-
+```bash
 lastlog
-
-#### Ver últimos accesos por usuario
-lastlog
+```
 
 #### Accesos recientes con fecha y duración
+```bash
 last -F | head -n 10
-
+```
 #### Sesiones activas actualmente
+```bash
 w
-
+```
 ---
 
 ### 🚪 Autenticaciones SSH
