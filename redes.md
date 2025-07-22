@@ -11,6 +11,8 @@ Este documento recopila comandos esenciales para:
 
 Los atacantes pueden ocultar procesos o modificar logs, pero rara vez pueden actuar sin generar tráfico. Un buen análisis de red puede ayudarte a detectar intrusiones silenciosas antes de que generen impacto.
 
+---
+
 > 🧠 Consejo: si solo vigilas lo que ocurre en disco, llegas tarde. En la red puedes ver lo que *está ocurriendo ahora*.
 
 ---
@@ -56,7 +58,7 @@ ping -c 4 8.8.8.8
 ```bash
 traceroute 8.8.8.8
 ```
-# Consultar resolución DNS
+#### Consultar resolución DNS
 ```bash
 nslookup github.com
 dig github.com
