@@ -29,6 +29,8 @@ Revisa IPs con herramientas como AbuseIPDB o VirusTotal si detectas conexiones e
 
 Si tienes dudas, apaga la máquina y clona el disco para análisis forense en frío.
 
+---
+
 > 🧠 Consejo: una intrusión rara vez deja un solo rastro. Aprende a hilar pequeñas anomalías hasta formar un patrón claro. La intuición del analista se entrena con experiencia y con método.
 
 ---
