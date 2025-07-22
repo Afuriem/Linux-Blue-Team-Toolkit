@@ -15,8 +15,11 @@ Cada comando incluye:
 - 📄 Resultado esperado o captura simulada.
 - 🔎 Casos de uso defensivos.
 
+---
+
 > 💡 Consejo: no subestimes el poder de lo básico. Dominar estos comandos te hará mucho más ágil a la hora de responder ante incidentes o detectar anomalías en sistemas Linux.
 
+---
 
 ## 🧠 Comandos Básicos – Navegación y Gestión de Archivos
 
